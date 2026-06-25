@@ -18,4 +18,6 @@ public interface AutorRepository extends JpaRepository<Autor,Integer> {
 
     @Query("SELECT a.nombre, COUNT(1) FROM Autor a LEFT JOIN a.libros l GROUP BY a.nombre")
     List<Object[]> contarLibrosPorAutor();
+
+    List<Autor> findByNacionalidadIgnoreCase(String nacionalidad);
 }

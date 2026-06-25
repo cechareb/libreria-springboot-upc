@@ -4,9 +4,7 @@ import edu.upc.sistemas.libreriaspringboot.entity.Autor;
 import edu.upc.sistemas.libreriaspringboot.entity.Libro;
 import edu.upc.sistemas.libreriaspringboot.service.AutorService;
 import edu.upc.sistemas.libreriaspringboot.service.LibroService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,14 +12,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
-@Component
+//@Component
 public class ConsoleMenu implements CommandLineRunner {
 
     private final AutorService autorService;
     private final LibroService libroService;
     private final Scanner scanner;
 
-    @Autowired
+    //@Autowired
     public ConsoleMenu(AutorService autorService, LibroService libroService) {
         this.autorService = autorService;
         this.libroService = libroService;
@@ -30,28 +28,36 @@ public class ConsoleMenu implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("╔══════════════════════════════════════════════════════╗");
-        System.out.println("║     SISTEMA DE GESTIÓN DE LIBRERÍA - SPRING BOOT     ║");
-        System.out.println("║              PostgreSQL + Spring Data JPA            ║");
-        System.out.println("╚══════════════════════════════════════════════════════╝");
+//        System.out.println("╔══════════════════════════════════════════════════════╗");
+//        System.out.println("║     SISTEMA DE GESTIÓN DE LIBRERÍA - SPRING BOOT     ║");
+//        System.out.println("║              PostgreSQL + Spring Data JPA            ║");
+//        System.out.println("╚══════════════════════════════════════════════════════╝");
+//
+//        boolean salir = false;
+//        while (!salir) {
+//            mostrarMenuPrincipal();
+//            int opcion = leerEntero("Seleccione una opción: ");
+//
+//            switch (opcion) {
+//                case 1 -> menuAutores();
+//                case 2 -> menuLibros();
+//                case 3 -> menuReportes();
+//                case 0 -> {
+//                    salir = true;
+//                    System.out.println("\n¡Hasta luego!");
+//                }
+//                default -> System.out.println("\nOpción no válida.");
+//            }
+//        }
+//        scanner.close();
 
-        boolean salir = false;
-        while (!salir) {
-            mostrarMenuPrincipal();
-            int opcion = leerEntero("Seleccione una opción: ");
+        Autor autor = new Autor("Patrick Star", "Australia", LocalDate.parse("1991-04-18", DateTimeFormatter.ISO_LOCAL_DATE));
+        Autor creadoAut = autorService.crearAutor(autor);
+        autor.setId(creadoAut.getId());
 
-            switch (opcion) {
-                case 1 -> menuAutores();
-                case 2 -> menuLibros();
-                case 3 -> menuReportes();
-                case 0 -> {
-                    salir = true;
-                    System.out.println("\n¡Hasta luego!");
-                }
-                default -> System.out.println("\nOpción no válida.");
-            }
-        }
-        scanner.close();
+        Libro libro = new Libro("Lib1", "12321154546", 1999, new BigDecimal("53.68"), autor);
+        Libro creadoLib = libroService.crearLibro(libro);
+        System.out.println("Libro creado con ID: " + creadoLib.getId());
 
     }
 
